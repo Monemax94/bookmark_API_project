@@ -141,3 +141,26 @@ def editbookmark(id):
             'updated_at': bookmark.updated_at,
         }), HTTP_200_OK
 
+@bookmarks.get("/stats")
+@jwt_required()
+# @swag_from("./docs/bookmarks/stats.yaml")
+def get_stats():
+    current_user = get_jwt_identity()
+
+    data = []
+
+    items = Bookmark.query.filter_by(user_id=current_user).all()
+
+    for item in items:
+        new_link = {
+            'visits': item.visits,
+            'url': item.url,
+            'id': item.id,
+            'short_url': item.short_url,
+        }
+
+        data.append(new_link)
+
+    return jsonify({'data': data}), HTTP_200_OK
+
+
