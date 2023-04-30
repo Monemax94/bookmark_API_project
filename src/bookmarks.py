@@ -109,7 +109,6 @@ def delete_bookmark(id):
     return jsonify({}), HTTP_204_NO_CONTENT
 
 
-
 @bookmarks.put('/<int:id>')
 @bookmarks.patch('/<int:id>')
 @jwt_required()
@@ -132,7 +131,6 @@ def editbookmark(id):
 
     db.session.commit()
     
-
     return jsonify({
             'id': bookmark.id,
             'url': bookmark.url,
